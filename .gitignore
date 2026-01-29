@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Environments
+.venv/
+env/
+conda/
+anaconda/
+
+# HuggingFace cache
+.cache/
+.huggingface/
+
+# OS
+.DS_Store
