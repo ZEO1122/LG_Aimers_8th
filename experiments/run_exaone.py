@@ -19,7 +19,7 @@ NUM_CALIBRATION_SAMPLES = 256
 MAX_SEQUENCE_LENGTH = 512
 
 # Quantization
-SCHEME = "W4A16"
+SCHEME = "W8A8"
 TARGETS = ["Linear"]
 IGNORE  = ["embed_tokens", "lm_head"]
 
@@ -83,7 +83,7 @@ tokenizer.save_pretrained(OUT_DIR)
 
 print(f"[INFO] 모델 저장 완료: {OUT_DIR}")
 
-zip_name = "baseline_submit"
+zip_name = "baseline_W8A8"
 print(f"[INFO] {zip_name}.zip 생성 중...")
 
 shutil.make_archive(
