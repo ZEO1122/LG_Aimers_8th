@@ -9,7 +9,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from llmcompressor import oneshot
 from llmcompressor.modifiers.quantization import GPTQModifier
 
-MODEL_ID = "./open/base_model"     
+MODEL_ID = "../open/base_model"     
 OUT_DIR  = "./model"          
 
 DATASET_ID = "LGAI-EXAONE/MANTA-1M"

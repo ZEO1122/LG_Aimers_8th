@@ -14,3 +14,11 @@ anaconda/
 
 # OS
 .DS_Store
+
+# model folders / artifacts
+open/
+W8A8_model/
+*.safetensors
+*.bin
+*.pt
+*.zip
