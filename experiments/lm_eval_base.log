@@ -1,0 +1,105 @@
+2026-02-04:14:06:21 INFO     [config.evaluate_config:301] Using default fewshot_as_multiturn=True.
+2026-02-04:14:06:24 INFO     [_cli.run:376] Selected Tasks: ['gsm8k']
+2026-02-04:14:06:24 INFO     [evaluator:211] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fewshot manual seed to 1234
+2026-02-04:14:06:24 WARNING  [evaluator:223] generation_kwargs: {'max_gen_toks': 16384} specified through cli, these settings will update set parameters in yaml tasks. Ensure 'do_sample=True' for non-greedy decoding!
+2026-02-04:14:06:24 INFO     [evaluator:236] Initializing vllm model, with arguments: {'pretrained': '/home/ubuntu/Desktop/LG Aimers/open/base_model', 'dtype': 'auto', 'gpu_memory_utilization': 0.85, 'tensor_parallel_size': 1, 'trust_remote_code': True}
+INFO 02-04 14:06:26 [utils.py:263] non-default args: {'trust_remote_code': True, 'seed': 1234, 'gpu_memory_utilization': 0.85, 'disable_log_stats': True, 'model': '/home/ubuntu/Desktop/LG Aimers/open/base_model'}
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+INFO 02-04 14:06:26 [model.py:530] Resolved architecture: Exaone4ForCausalLM
+INFO 02-04 14:06:26 [model.py:1545] Using max model len 65536
+INFO 02-04 14:06:26 [scheduler.py:229] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 02-04 14:06:26 [vllm.py:630] Asynchronous scheduling is enabled.
+INFO 02-04 14:06:26 [vllm.py:637] Disabling NCCL for DP synchronization when using async scheduling.
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:29 [core.py:97] Initializing a V1 LLM engine (v0.14.1) with config: model='/home/ubuntu/Desktop/LG Aimers/open/base_model', speculative_config=None, tokenizer='/home/ubuntu/Desktop/LG Aimers/open/base_model', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=65536, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=1234, served_model_name=/home/ubuntu/Desktop/LG Aimers/open/base_model, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'eliminate_noops': True, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': True}, 'local_cache_dir': None}
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:30 [parallel_state.py:1214] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://121.124.169.195:44289 backend=nccl
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:30 [parallel_state.py:1425] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:30 [gpu_model_runner.py:3808] Starting to load model /home/ubuntu/Desktop/LG Aimers/open/base_model...
+[0;36m(EngineCore_DP0 pid=15939)[0;0m /home/ubuntu/anaconda3/envs/exaone/lib/python3.10/site-packages/tvm_ffi/_optional_torch_c_dlpack.py:174: UserWarning: Failed to JIT torch c dlpack extension, EnvTensorAllocator will not be enabled.
+[0;36m(EngineCore_DP0 pid=15939)[0;0m We recommend installing via `pip install torch-c-dlpack-ext`
+[0;36m(EngineCore_DP0 pid=15939)[0;0m   warnings.warn(
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:31 [cuda.py:351] Using FLASH_ATTN attention backend out of potential backends: ('FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION')
+[0;36m(EngineCore_DP0 pid=15939)[0;0m 
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[0;36m(EngineCore_DP0 pid=15939)[0;0m 
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  1.07it/s]
+[0;36m(EngineCore_DP0 pid=15939)[0;0m 
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  1.07it/s]
+[0;36m(EngineCore_DP0 pid=15939)[0;0m 
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:32 [default_loader.py:291] Loading weights took 0.97 seconds
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:33 [gpu_model_runner.py:3905] Model loading took 2.39 GiB memory and 1.942987 seconds
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:36 [backends.py:644] Using cache directory: /home/ubuntu/.cache/vllm/torch_compile_cache/3e772f2be0/rank_0_0/backbone for vLLM's torch.compile
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:36 [backends.py:704] Dynamo bytecode transform time: 3.13 s
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:38 [backends.py:226] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 0.407 s
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:38 [monitor.py:34] torch.compile takes 3.54 s in total
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:38 [gpu_worker.py:358] Available KV cache memory: 9.81 GiB
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:38 [kv_cache_utils.py:1305] GPU KV cache size: 171,472 tokens
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:38 [kv_cache_utils.py:1310] Maximum concurrency for 65,536 tokens per request: 2.62x
+[0;36m(EngineCore_DP0 pid=15939)[0;0m 
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  10%|▉         | 5/51 [00:00<00:01, 42.56it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  20%|█▉        | 10/51 [00:00<00:00, 43.66it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  29%|██▉       | 15/51 [00:00<00:00, 45.59it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  41%|████      | 21/51 [00:00<00:00, 49.00it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  53%|█████▎    | 27/51 [00:00<00:00, 51.37it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  65%|██████▍   | 33/51 [00:00<00:00, 52.68it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  78%|███████▊  | 40/51 [00:00<00:00, 57.96it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  92%|█████████▏| 47/51 [00:00<00:00, 61.55it/s]
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 51/51 [00:00<00:00, 54.50it/s]
+[0;36m(EngineCore_DP0 pid=15939)[0;0m 
+Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+Capturing CUDA graphs (decode, FULL):  14%|█▍        | 5/35 [00:00<00:00, 42.21it/s]
+Capturing CUDA graphs (decode, FULL):  31%|███▏      | 11/35 [00:00<00:00, 47.62it/s]
+Capturing CUDA graphs (decode, FULL):  49%|████▊     | 17/35 [00:00<00:00, 51.06it/s]
+Capturing CUDA graphs (decode, FULL):  69%|██████▊   | 24/35 [00:00<00:00, 57.42it/s]
+Capturing CUDA graphs (decode, FULL):  91%|█████████▏| 32/35 [00:00<00:00, 63.68it/s]
+Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 59.24it/s]
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:40 [gpu_model_runner.py:4856] Graph capturing finished in 2 secs, took 0.45 GiB
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:40 [core.py:273] init engine (profile, create kv cache, warmup model) took 7.72 seconds
+[0;36m(EngineCore_DP0 pid=15939)[0;0m INFO 02-04 14:06:41 [vllm.py:630] Asynchronous scheduling is enabled.
+INFO 02-04 14:06:41 [llm.py:347] Supported tasks: ['generate']
+2026-02-04:14:06:44 INFO     [tasks:700] Selected tasks:
+2026-02-04:14:06:44 INFO     [tasks:691] Task: gsm8k (gsm8k/gsm8k.yaml)
+2026-02-04:14:06:44 INFO     [evaluator:314] gsm8k: Using gen_kwargs: {'until': ['Question:', '</s>', '<|im_end|>'], 'do_sample': False, 'temperature': 0.0, 'max_gen_toks': 16384}
+2026-02-04:14:06:44 WARNING  [evaluator:490] Chat template formatting change affects loglikelihood and multiple-choice tasks. See docs/chat-template-readme.md for details.
+2026-02-04:14:06:44 INFO     [api.task:311] Building contexts for gsm8k on rank 0...
+
+  0%|          | 0/1319 [00:00<?, ?it/s]
+  4%|▍         | 52/1319 [00:00<00:02, 514.78it/s]
+  8%|▊         | 109/1319 [00:00<00:02, 545.91it/s]
+ 13%|█▎        | 167/1319 [00:00<00:02, 559.13it/s]
+ 17%|█▋        | 225/1319 [00:00<00:01, 564.35it/s]
+ 21%|██▏       | 283/1319 [00:00<00:01, 566.80it/s]
+ 26%|██▌       | 341/1319 [00:00<00:01, 569.62it/s]
+ 30%|███       | 398/1319 [00:00<00:02, 426.87it/s]
+ 34%|███▍      | 455/1319 [00:00<00:01, 462.97it/s]
+ 39%|███▉      | 512/1319 [00:01<00:01, 490.95it/s]
+ 43%|████▎     | 570/1319 [00:01<00:01, 513.19it/s]
+ 48%|████▊     | 628/1319 [00:01<00:01, 529.98it/s]
+ 52%|█████▏    | 685/1319 [00:01<00:01, 540.83it/s]
+ 56%|█████▋    | 743/1319 [00:01<00:01, 550.24it/s]
+ 61%|██████    | 801/1319 [00:01<00:00, 556.16it/s]
+ 65%|██████▌   | 858/1319 [00:01<00:00, 559.36it/s]
+ 69%|██████▉   | 915/1319 [00:01<00:00, 560.71it/s]
+ 74%|███████▎  | 972/1319 [00:01<00:00, 561.50it/s]
+ 78%|███████▊  | 1029/1319 [00:01<00:00, 562.81it/s]
+ 82%|████████▏ | 1086/1319 [00:02<00:00, 563.64it/s]
+ 87%|████████▋ | 1143/1319 [00:02<00:00, 564.76it/s]
+ 91%|█████████ | 1200/1319 [00:02<00:00, 564.71it/s]
+ 95%|█████████▌| 1257/1319 [00:02<00:00, 562.36it/s]
+100%|█████████▉| 1314/1319 [00:02<00:00, 559.19it/s]
+100%|██████████| 1319/1319 [00:02<00:00, 541.16it/s]
+2026-02-04:14:06:46 INFO     [evaluator:584] Running generate_until requests
+
+Running generate_until requests:   0%|          | 0/1319 [00:00<?, ?it/s]
+
+Adding requests:   0%|          | 0/1319 [00:00<?, ?it/s][A
+Adding requests: 100%|██████████| 1319/1319 [00:00<00:00, 13460.91it/s]
+
+
+Processed prompts:   0%|          | 0/1319 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s][A
+
+Processed prompts:   0%|          | 1/1319 [00:10<3:40:51, 10.05s/it, est. speed input: 144.22 toks/s, output: 18.20 toks/s][A
+
+Processed prompts:   0%|          | 2/1319 [00:11<1:52:58,  5.15s/it, est. speed input: 241.29 toks/s, output: 36.72 toks/s][A
+

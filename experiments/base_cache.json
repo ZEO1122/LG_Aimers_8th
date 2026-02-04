@@ -1,0 +1,23 @@
+{
+  "signature": {
+    "base_model_dir": "/home/ubuntu/Desktop/LG Aimers/open/base_model",
+    "tasks": "gsm8k",
+    "device": "cuda:0",
+    "lm_eval_backend": "vllm",
+    "batch_size": "auto",
+    "limit": null,
+    "perf_metric_mode": "strict",
+    "vllm_tp": 1,
+    "vllm_gpu_mem_util": 0.85,
+    "vllm_dtype": "auto",
+    "vllm_max_gen_toks": 16384,
+    "apply_chat_template": true,
+    "speed_num_prompts": 32,
+    "speed_max_tokens": 2048,
+    "speed_include_init_time": true,
+    "speed_prompt_source": "gsm8k"
+  },
+  "perf_base": 0.7808946171341926,
+  "tpt_base": 0.0016333912243894696,
+  "updated_at": "2026-02-04 00:54:56"
+}
