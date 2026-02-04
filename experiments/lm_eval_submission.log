@@ -1,0 +1,4 @@
+2026-02-04:14:57:58 INFO     [config.evaluate_config:301] Using default fewshot_as_multiturn=True.
+2026-02-04:14:58:01 INFO     [_cli.run:376] Selected Tasks: ['gsm8k']
+2026-02-04:14:58:01 INFO     [evaluator:211] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fewshot manual seed to 1234
+2026-02-04:14:58:01 INFO     [evaluator:236] Initializing vllm model, with arguments: {'pretrained': '/tmp/submission_tg3jfcvw/model', 'dtype': 'auto', 'gpu_memory_utilization': 0.85, 'tensor_parallel_size': 1, 'trust_remote_code': True}
