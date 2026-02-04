@@ -20,6 +20,7 @@ open/
 W8A8_model/
 W4A16_model/
 W8A16_model/
+model/
 *.safetensors
 *.bin
 *.pt
