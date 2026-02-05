@@ -51,6 +51,7 @@ EXAONE-4.0-1.2B 기반 모델 경량화(GPTQ/AWQ/SmoothQuant 등) 실험, 제출
 
 ## 로컬 평가 예시
 - 실행 코드
+
 VLLM_WORKER_MULTIPROC_METHOD=spawn HF_HUB_ENABLE_HF_TRANSFER=0 \
 python score_zip.py \
   --zip ./YOUR_W8A8.zip \
