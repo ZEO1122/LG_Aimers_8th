@@ -25,7 +25,7 @@ NUM_CALIBRATION_SAMPLES = 216
 MAX_SEQUENCE_LENGTH = 512
 
 # Quantization (AWQ)
-SCHEME = "W4A16_ASYM"            # 비교 실험: "W4A16_ASYM"
+SCHEME = "W4A8"            # 비교 실험: "W4A16_ASYM"
 TARGETS = ["Linear"]
 IGNORE  = ["embed_tokens", "lm_head"]
 
