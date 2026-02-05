@@ -21,6 +21,7 @@ W8A8_model/
 W4A16_model/
 W8A16_model/
 model/
+model_awq_w4a16
 *.safetensors
 *.bin
 *.pt
