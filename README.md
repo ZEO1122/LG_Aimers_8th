@@ -65,7 +65,8 @@ python score_zip.py \
   --perf_metric_mode flexible
 
 - 평가 예시
-  
+
+```
 ========== RESULT ==========
 Perf_model          : 0.225171
 Perf_base           : 0.236543
@@ -75,7 +76,7 @@ TimePerToken_base   : 0.000334   (time=3.551s, tokens=10630)
 SpeedNorm_model     : 0.231116
 Score               : 0.591520
 ============================
-
+```
 
 ---
 
