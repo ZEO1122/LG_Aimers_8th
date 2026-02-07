@@ -1,87 +1,72 @@
-# LG Aimers 8기: 모델 경량화 온라인 해커톤 실험 레포
-EXAONE-4.0-1.2B 기반 모델 경량화(GPTQ/AWQ/SmoothQuant 등) 실험, 제출용 `submit.zip` 생성, 로컬 평가 스크립트를 모아둔 레포입니다.
+# LG Aimers
 
-대회 페이지: `https://dacon.io/competitions/official/236673/overview/description` ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
+`EXAONE-4.0-1.2B` 기반 QLoRA 학습 실험을 정리한 최소 레포입니다. 이 저장소는 `experiments/baseline_model/QLoRA_baseline_3000_val.ipynb` 한 개를 기준으로 재구성했습니다.
 
----
+## 포함 내용
 
-## 대회 요약
-- 배경: On-Device 환경에서의 응답 지연, 메모리, 비용 제약을 고려한 경량화 필요성이 강조됩니다. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 주제: LLM 경량화 (Large Language Model Compression). ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 기본 모델: EXAONE-4.0-1.2B. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 평가 환경: vLLM 기반 고정 추론 환경에서 성능·효율 비교. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 온라인 해커톤(Phase 2): vLLM 라이브러리 수정 불가, HF 표준 형식 모델 가중치/설정 파일만 제출. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 오프라인 해커톤(Phase 3): 경량화 모델 + vLLM 커스터마이징 제출 가능. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 제출 형식: `submit.zip` 업로드, HF 표준 형식의 모델 가중치/설정만 포함, 운영진 고정 스크립트로 평가. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 제한: 전체 추론 시간 ≤ 20분, 제출 파일 ≤ 10GB(압축 해제 후 32GB), 6 vCPU/28GB RAM/L4 22.4GiB 환경. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
+- `experiments/baseline_model/QLoRA_baseline_3000_val.ipynb`
+  - `LGAI-EXAONE/EXAONE-4.0-1.2B` 모델 사용
+  - `LGAI-EXAONE/MANTA-1M` 데이터셋 사용
+  - `shuffle(seed=42)` 후 3000개 샘플 사용
+  - 검증셋 150개 분리
+  - QLoRA 학습 후 선택적으로 Merge + GPTQ + zip 수행
 
+## 디렉토리 구조
 
----
-
-## 레포 구성
-- `README.md`: 프로젝트 설명 및 대회 요약.
-- `Setup.md`: 로컬 환경 세팅 가이드.
-- `open/base_model`: EXAONE 기본 모델(HF 포맷) 디렉토리.
-- `experiments/baseline_model`: GPTQ/AWQ/SmoothQuant 베이스라인 실험.
-- `experiments/Data_model`: 캘리브레이션 데이터 변형 실험.
-- `experiments/pine-tuning_model`: 캘리브레이션 세부 튜닝 실험.
-- `experiments/*/score_zip.py`: `submit.zip` 평가 스크립트.
-- `experiments/base_cache.json`: 베이스 모델 성능/속도 캐시.
-
----
-
-## 주요 실험 스크립트
-- GPTQ W8A8: `experiments/baseline_model/GPTQ/W8A8_baseline_model.py`
-- AWQ: `experiments/baseline_model/AWQ/AWQ (W4A16).py`
-- SmoothQuant + GPTQ: `experiments/baseline_model/SmoothQuant_GPTQ (W8A8).py`
-- 데이터 믹스: `experiments/Data_model/MANTA-1M + sharegpt-korean._W8A8.py`
-- 한국어 위키 캘리브레이션: `experiments/Data_model/Korean Wikipedia_W8A8.py`
-- 파라미터 튜닝: `experiments/pine-tuning_model/NOT_IGNORE_lm_head_W8A8.py`, `experiments/pine-tuning_model/MAX1024_W8A8.py`
-
----
-
-## 빠른 시작
-- 실행 위치: 스크립트 내부 기본 경로가 `../open/base_model`이므로 `experiments/`에서 실행하는 것을 전제로 합니다.
-- 환경 준비: `Setup.md` 참고.
-- 예시 실행:
-- `cd experiments`
-- `python baseline_model/GPTQ/W8A8_baseline_model.py`
-
----
-
-## 로컬 평가 예시
-- 실행 코드
-
-VLLM_WORKER_MULTIPROC_METHOD=spawn HF_HUB_ENABLE_HF_TRANSFER=0 \
-python score_zip.py \
-  --zip ./YOUR_W8A8.zip \
-  --base_model ../open/base_model \
-  --tasks gsm8k \
-  --lm_eval_backend vllm \
-  --batch_size auto \
-  --vllm_tp 1 \
-  --vllm_gpu_mem_util 0.85 \
-  --vllm_apply_chat_template \
-  --perf_metric_mode flexible
-
-- 평가 예시
-
-```
-========== RESULT ==========
-Perf_model          : 0.225171
-Perf_base           : 0.236543
-PerfNorm_model      : 0.951923
-TimePerToken_model  : 0.000257   (time=2.725s, tokens=10608)
-TimePerToken_base   : 0.000334   (time=3.551s, tokens=10630)
-SpeedNorm_model     : 0.231116
-Score               : 0.591520
-============================
+```text
+.
+├── README.md
+├── .gitignore
+└── experiments
+    └── baseline_model
+        └── QLoRA_baseline_3000_val.ipynb
 ```
 
----
+## 실험 개요
 
-## 제출 체크리스트
-- `submit.zip` 안에 HF 표준 형식 모델 폴더 전체가 포함되어 있는지 확인. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
-- 제출 파일 용량 및 실행 환경 제한을 충족하는지 점검. ([dacon.io](https://dacon.io/competitions/official/236673/overview/description))
+노트북은 아래 흐름으로 구성됩니다.
 
----
+1. 공통 import 및 경로/하이퍼파라미터 설정
+2. 데이터셋 로드 및 3000개 샘플 구성
+3. SFT 입력 포맷 전처리
+4. LoRA 적용 후 학습 및 검증 loss 모니터링
+5. 선택적으로 Merge, GPTQ 양자화, 제출용 zip 생성
+
+주요 설정값:
+
+- `MODEL_ID`: `LGAI-EXAONE/EXAONE-4.0-1.2B`
+- `DATASET_ID`: `LGAI-EXAONE/MANTA-1M`
+- `NUM_TOTAL_SAMPLES`: `3000`
+- `NUM_EVAL_SAMPLES`: `150`
+- `MAX_TRAIN_SEQ_LEN`: `1024`
+- `LEARNING_RATE`: `1e-5`
+- `NUM_TRAIN_EPOCHS`: `1`
+- `LORA_R`: `16`
+- `LORA_ALPHA`: `32`
+- `LORA_DROPOUT`: `0.05`
+- `EVAL_STEPS`: `20`
+
+## 실행 환경
+
+노트북에서 사용하는 주요 라이브러리:
+
+- `torch`
+- `datasets`
+- `transformers`
+- `peft`
+- `llmcompressor`
+
+기본 작업 경로는 환경 변수 `WORKSPACE`를 사용하며, 미설정 시 `/workspace`를 사용합니다.
+
+## 정리 원칙
+
+GitHub 업로드를 위해 아래 항목은 모두 제거했습니다.
+
+- 학습 결과물 및 체크포인트
+- 양자화 모델 폴더와 `submit.zip` 계열 산출물
+- 로그, 분석 리포트, 임시 캐시
+- 실험 파생 스크립트와 중복 베이스라인 파일
+
+## 주의사항
+
+이 레포는 실행 결과물을 포함하지 않습니다. 모델 가중치, 캐시, 학습 산출물은 로컬 또는 별도 스토리지에서 관리하는 전제를 둡니다.

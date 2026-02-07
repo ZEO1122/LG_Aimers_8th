@@ -1,28 +1,46 @@
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Notebook
+.ipynb_checkpoints/
 
 # Environments
 .venv/
+venv/
 env/
 conda/
 anaconda/
 
-# HuggingFace cache
+# Editor / OS
+.vscode/
+.DS_Store
+
+# Hugging Face / caches
 .cache/
 .huggingface/
 
-# OS
-.DS_Store
-
-# model folders / artifacts
-open/
-W8A8_model/
-W4A16_model/
-W8A16_model/
+# Training artifacts
+logs/
+runs/
+outputs/
+out/
+workspace/
+checkpoints/
+lora_adapter/
+lora_ckpt/
+merged_model/
 model/
-model_awq_w4a16
+
+# Model files
 *.safetensors
 *.bin
 *.pt
+*.ckpt
+
+# Archives
 *.zip
+*.tar
+*.tar.gz
