@@ -13,10 +13,13 @@ venv/
 env/
 conda/
 anaconda/
+!/env/
+!/env/**
 
 # Editor / OS
 .vscode/
 .DS_Store
+._*
 
 # Hugging Face / caches
 .cache/
@@ -33,14 +36,23 @@ lora_adapter/
 lora_ckpt/
 merged_model/
 model/
+local_outputs/
 
 # Model files
 *.safetensors
 *.bin
 *.pt
 *.ckpt
+*.gguf
 
 # Archives
 *.zip
 *.tar
 *.tar.gz
+
+# Competition / private assets
+open/
+open 2/
+experiments/open/base_model/
+experiments/open/dataset/
+baseline_submit.zip

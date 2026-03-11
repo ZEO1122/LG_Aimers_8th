@@ -63,7 +63,7 @@ DATASET_SPLIT = "train"
 # 로컬/환경 변수 기반 기본 경로
 # ---------------------------
 def parse_args():
-    repo_root = Path(__file__).resolve().parents[2]
+    repo_root = Path(__file__).resolve().parent
     local_open_dir = repo_root / "open"
     local_model_dir = local_open_dir / "base_model"
     local_dataset_dir = local_open_dir / "dataset"
