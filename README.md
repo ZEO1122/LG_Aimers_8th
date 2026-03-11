@@ -77,13 +77,18 @@ python /home/ubuntu/Desktop/LG\ Aimers/qlora_baseline_3000_val_local.py --run-gp
 
 ## 모델 메커니즘
 
-스크립트의 전체 흐름은 아래와 같습니다.
+스크립트는 크게 아래 5단계로 동작합니다.
 
-1. 모델과 데이터셋 입력 소스 결정
-2. 데이터 전처리
-3. QLoRA 학습
+1. 로컬 경로 또는 Hugging Face 소스에서 모델/데이터셋 결정
+2. 대화형 데이터 전처리
+3. 4bit QLoRA 학습
 4. LoRA adapter 저장
-5. 선택적으로 Merge + GPTQ 양자화 + zip 저장
+5. 선택적으로 Merge 후 GPTQ W8A8 양자화
+
+전체 구조를 한 줄로 요약하면 다음과 같습니다.
+
+- 학습 단계: 4bit 양자화 베이스 모델 + LoRA adapter 학습
+- 후처리 단계: 필요 시 adapter를 병합한 뒤 GPTQ로 최종 양자화
 
 ### 데이터 전처리
 
@@ -94,6 +99,14 @@ python /home/ubuntu/Desktop/LG\ Aimers/qlora_baseline_3000_val_local.py --run-gp
 - 이전 대화는 prompt로 사용
 - prompt 구간은 `labels=-100` 으로 마스킹
 - answer 구간만 loss 계산
+
+전처리 순서:
+
+1. `conversations[:-1]` 를 prompt로 사용
+2. 마지막 `assistant` 응답을 answer로 사용
+3. prompt는 `apply_chat_template(..., add_generation_prompt=True)` 적용
+4. answer는 별도 tokenize
+5. answer 끝에는 항상 `eos_id` 보장
 
 길이 처리 규칙:
 
@@ -116,6 +129,13 @@ python /home/ubuntu/Desktop/LG\ Aimers/qlora_baseline_3000_val_local.py --run-gp
 
 즉 학습 목적은 전체 문장을 복원하는 것이 아니라, prompt 뒤에 오는 assistant answer만 맞추도록 하는 SFT 구조입니다.
 
+추가로 데이터셋 분할은 아래 규칙을 따릅니다.
+
+- 전체 데이터셋을 `seed=42`로 셔플
+- 앞 `3000`개만 사용
+- 그 중 `150`개를 eval로 분리
+- 결과적으로 train `2850`, eval `150`
+
 ### QLoRA 학습
 
 학습 단계에서는 4bit 양자화된 베이스 모델 위에 LoRA adapter만 학습합니다.
@@ -126,6 +146,8 @@ python /home/ubuntu/Desktop/LG\ Aimers/qlora_baseline_3000_val_local.py --run-gp
 - `bnb_4bit_quant_type="nf4"`
 - `bnb_4bit_use_double_quant=True`
 - compute dtype은 가능하면 `bf16`, 아니면 `fp16`, 그 외에는 `fp32`
+
+이 단계의 목적은 베이스 모델 전체를 저정밀도로 유지하면서, 학습 가능한 파라미터를 LoRA adapter로 제한해 메모리 사용량을 줄이는 것입니다.
 
 LoRA 설정:
 
@@ -151,6 +173,14 @@ LoRA 설정:
 - warmup ratio: `0.05`
 - eval every `20` steps
 
+학습 중 모니터링:
+
+- `logging_steps=20`
+- `eval_steps=20`
+- `metric_for_best_model="eval_loss"`
+- 학습 종료 후 train loss / eval loss 로그 요약
+- 가능하면 `train_eval_loss.png` 저장
+
 학습 후에는 `trainer.state.log_history` 에서 train loss와 eval loss를 읽어 요약하고, 가능하면 loss plot도 저장합니다.
 
 ### GPTQ 양자화
@@ -165,6 +195,8 @@ LoRA 설정:
 4. prompt-only 캘리브레이션 데이터 구성
 5. GPTQ one-shot 양자화 수행
 6. 최종 모델과 zip 저장
+
+이 단계는 학습용 QLoRA 모델을 배포/제출용 저정밀 모델로 바꾸는 후처리 단계입니다.
 
 캘리브레이션 방식:
 
@@ -191,6 +223,13 @@ LoRA 설정:
 - `embed_tokens`
 - `lm_head`
 
+필요 시 코드 내 preset으로 아래 계열도 확장 가능합니다.
+
+- `plus_o`
+- `plus_down`
+- `plus_o_down`
+- `attn_all`
+
 ### 저장 결과
 
 학습 후 저장되는 주요 결과:
@@ -205,8 +244,6 @@ LoRA 설정:
 
 - 1단계: QLoRA로 adapter 학습
 - 2단계: 필요 시 adapter를 병합한 뒤 GPTQ W8A8로 최종 양자화
-
-자세한 메커니즘 설명은 [qlora_baseline_3000_val_local.md](/home/ubuntu/Desktop/LG%20Aimers/experiments/baseline_model/qlora_baseline_3000_val_local.md) 에 정리되어 있습니다.
 
 ## 주의사항
 
