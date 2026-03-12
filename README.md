@@ -1,4 +1,4 @@
-# LG Aimers Model Compression Portfolio
+# LG Aimers Model Compression
 
 LG AI연구원 EXAONE-4.0-1.2B를 대상으로 진행한 LLM 경량화 프로젝트입니다.  
 대회명은 `Aimers 8기 : 모델 경량화 온라인 해커톤`이며, DACON 환경에서 모델 성능과 추론 효율을 함께 최적화하는 것이 목표였습니다.
